@@ -1,0 +1,9 @@
+Changes
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+README.mkdn
+dist.ini
+lib/Dist/Zilla/Plugin/GitFmtChanges.pm

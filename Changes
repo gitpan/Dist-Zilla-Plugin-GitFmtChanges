@@ -1,0 +1,36 @@
+Revision History for Dist-Zilla-Plugin-GitFmtChanges
+====================================================
+
+0.003
+-----
+
+* 2010-07-10 20:14:42 +1000
+  Adding Git plugins to dist.ini
+* 2010-07-10 19:43:36 +1000
+  Name current version, undated, instead of HEAD
+* 2010-07-10 19:31:02 +1000
+  Fixed error in log_format setting.
+* 2010-07-10 19:22:18 +1000
+  Tidied up.
+* 2010-07-10 19:21:21 +1000
+  Added options for GitFmtChanges to dist.ini
+* 2010-07-10 19:20:49 +1000
+  Added .gitignore file to ignore build stuff
+* 2010-07-10 18:42:27 +1000
+  renamed package
+* 2010-07-10 18:21:11 +1000
+  First pass of changes to use git log format
+* 2010-07-10 18:20:13 +1000
+  changes to dist.ini to get it working
+
+v0.002 2010-04-19
+-----------------
+
+* 2010-04-19 01:24:19 -0400
+  Test before releasing.
+* 2010-04-19 00:53:17 -0400
+  Add dependency version reporting and releasing.
+
+===================================
+End of changes in the last 365 days
+===================================
