@@ -3,7 +3,7 @@ NAME
     git log using git log format.
 
 VERSION
-    version 0.003
+    version 0.005
 
 SYNOPSIS
     In your dist.ini:

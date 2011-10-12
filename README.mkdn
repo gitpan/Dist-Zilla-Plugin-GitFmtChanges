@@ -1,3 +1,7 @@
+# VERSION
+
+version 0.005
+
 # SYNOPSIS
 
 In your dist.ini:

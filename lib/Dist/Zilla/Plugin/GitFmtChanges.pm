@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::GitFmtChanges;
 BEGIN {
-  $Dist::Zilla::Plugin::GitFmtChanges::VERSION = '0.003';
+  $Dist::Zilla::Plugin::GitFmtChanges::VERSION = '0.005';
 }
 =head1 NAME
 
@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::GitFmtChanges - Build CHANGES file from a project's git log
 
 =head1 VERSION
 
-version 0.003
+version 0.005
 
 =head1 SYNOPSIS
 
@@ -87,6 +87,8 @@ use Moose::Autobox;
 with 'Dist::Zilla::Role::FileGatherer';
 
 use POSIX qw(strftime);
+use Date::Simple qw(date today);
+use Git::Wrapper;
 
 has max_age => (
 	is      => 'ro',
@@ -112,6 +114,11 @@ has log_format => (
 	default => 'medium',
 );
 
+has git => (
+	is      =>'ro',
+	default => sub { Git::Wrapper->new('.') }
+);
+
 sub gather_files {
 	my ($self, $arg) = @_;
 
@@ -119,7 +126,7 @@ sub gather_files {
 		"%FT %T +0000", gmtime(time() - $self->max_age() * 86400)
 	);
 
-	chomp(my @tags = `git tag`);
+	my @tags = $self->git->tag;
 
 	{
 		my $tag_pattern = $self->tag_regexp();
@@ -131,8 +138,12 @@ sub gather_files {
 				next;
 			}
 
-			my $commit =
-				`git show $tags[$i] --format='tformat:(((((%ci)))))' | grep '(((((' | head -1`;
+			my @commit = $self->git->show(
+				{ format => 'tformat:(((((%ci)))))' },
+				$tags[$i]
+			);
+			my ($commit) = grep { m#\(\(\(\(\(# } @commit;
+
 			die $commit unless $commit =~ /\(\(\(\(\((.+?)\)\)\)\)\)/;
 
 			$tags[$i] = {
@@ -156,21 +167,22 @@ sub gather_files {
 
 			my @commit;
 
-			open my $commit, "-|", "git log --format='$log_format' $tags[$i-1]{tag}..$tags[$i]{tag} ."
+			open my $commit, "-|", "git log --format=\"$log_format\" $tags[$i-1]{tag}..$tags[$i]{tag} ."
 				or die $!;
-			local $/ = "\n\n";
-			while (<$commit>) {
 
-				push @commit, $_;
-			}
+			{ local $/ = "\n\n" ; @commit = <$commit> };
 
 			# Don't display the tag if there's nothing under it.
 			next unless @commit;
 
 			my $tag_line = "$tags[$i]{time} $tags[$i]{tag}";
+			# if this is the HEAD then take the version from
+			# the version, and the date as today
 			if ($tags[$i]{tag} eq 'HEAD')
 			{
-			    $tag_line = $self->zilla->version;
+			    my $today = today();
+			    my $ver = $self->zilla->version;
+			    $tag_line = "v$ver $today";
 			}
 			elsif ($tags[$i]{time} =~ /(\d+-\d+-\d+)/) # only date
 			{

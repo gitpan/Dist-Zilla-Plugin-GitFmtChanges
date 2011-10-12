@@ -20,9 +20,14 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'perl',
   'NAME' => 'Dist::Zilla::Plugin::GitFmtChanges',
   'PREREQ_PM' => {
-    'Text::Wrap' => '2006.1117'
+    'Date::Simple' => '0',
+    'Dist::Zilla::Role::FileGatherer' => '0',
+    'Git::Wrapper' => '0',
+    'Moose' => '0',
+    'Moose::Autobox' => '0',
+    'POSIX' => '0'
   },
-  'VERSION' => '0.003',
+  'VERSION' => '0.005',
   'test' => {
     'TESTS' => ''
   }

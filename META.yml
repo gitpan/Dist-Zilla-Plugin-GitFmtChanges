@@ -6,14 +6,20 @@ build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: 6.31
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.101880, CPAN::Meta::Converter version 2.101670'
+generated_by: 'Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.101670'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Dist-Zilla-Plugin-GitFmtChanges
 requires:
-  Text::Wrap: 2006.1117
+  Date::Simple: 0
+  Dist::Zilla::Role::FileGatherer: 0
+  Git::Wrapper: 0
+  Moose: 0
+  Moose::Autobox: 0
+  POSIX: 0
 resources:
-  repository: http://github.com/rubykat/dzp-GitFmtChanges
-version: 0.003
+  homepage: http://github.com/rubykat/dzp-GitFmtChanges/tree
+  repository: git://github.com/rubykat/dzp-GitFmtChanges.git
+version: 0.005
